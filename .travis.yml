@@ -3,6 +3,11 @@ rust:
   - stable
   - beta
   - nightly
+
+os:
+  - windows
+  - xenial
+
 matrix:
   allow_failures:
     - rust: nightly
