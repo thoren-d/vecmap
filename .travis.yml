@@ -6,7 +6,7 @@ rust:
 
 os:
   - windows
-  - xenial
+  - linux
 
 matrix:
   allow_failures:
