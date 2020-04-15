@@ -1,5 +1,5 @@
 pub mod vecmap;
-pub use vecmap::VecMap;
+pub use crate::vecmap::VecMap;
 
 #[cfg(test)]
 mod tests {
