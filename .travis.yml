@@ -1,33 +1,5 @@
 language: rust
 
-script:
-  - cargo build --verbose
-  - cargo test --verbose
-  - cargo bench --verbose
-
 rust:
   - stable
   - beta
-  - nightly
-
-os:
-  - windows
-  - linux
-
-arch:
-  - amd64
-  - arm64
-
-matrix:
-  allow_failures:
-    - rust: nightly
-
-deploy:
-  provider: gcs
-  access_key_id: GOOG1EXOYKP5MICTUWEBXBYI55VIQ2SGXQFA2DPZIDA7BLMUFS6SJ5AWS5NMA
-  secret_access_key:
-    secure: X9jcLoOJfz9Jzv1wo66c+65pvTUeCQPKa3sDffp9ROMwDywJ5vRGnenzgAEGgQXz6pNrJcwRS4hcPw7VDQ0VBZY7JPyVtDNAx8LLm9Gk1c9/kKr9WPb3E40Rsw2T1CIeYCwZYrX4AG2Fl9Dd6SX2QJSTUv3RvqUqdF7+a8qFjKHtM+urfc7nuFHoOfBfjhZhqamcDrWReZ7uZZIhCmGbpnCxqPgW7dkuSCGICeBkGIyyga9aqqBfcfvEH8qhRw1rlnDVaItcwaR1llfMxDHdo2poOjk+c0CfyAxlpLFvi7PFhC/iPTpVXtS8XPyFQUIYj6Cd+owJMwbCZdj/Pa7GjOpaX78LTLD1GyGkdChYdN01zauZt48pjstYH60mWd5ZyyArhbTUPm7j693lQyoY4prhdji0VgOEnSEpqclWOqZgnmiSAUAlQIfPPucan2GYZ5TBBR3va71zbkzoebR8g82HLbXDdgbDFeOSTlwhRgY2sTHbh+UcgiSF9T4lms7+8v7JBZxD7VoDNEXSpkPc5pUH+hajkwWXLfn2IT6eNslnH1Th4e1+0RrPt0R9VBT/VND40gIClYY2KBfRkAJOvPin9MJV/3izX7N5bLhyqlMr/xvZY8GvtTcw3ChA+L/77GnLVkrTZqMDOEgpHegdxMm5UbXxGUd3GV9dOHtx8TM=
-  bucket: yxj0awzhy3rz
-  skip_cleanup: true
-  on:
-    all_branches: true
