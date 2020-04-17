@@ -1,8 +1,12 @@
 language: rust
+
 rust:
-  - stable
-  - beta
-  - nightly
-matrix:
-  allow_failures:
-    - rust: nightly
+- stable
+- beta
+
+deploy:
+  provider: cargo
+  on:
+    branch: master
+  token:
+    secure: Dx/KW26ixcQSkSOjBRblw3tHGcwevDNS081rVd6Kne25d6fVu3iZdFQl9hsCF2DOiw6WaS1LWCblYz2FDP9PGBoTus2MrWenLP8QAq+OJ1IIhKvglzn3gy4mAMD8AkdW9vSxGuXoZh6d3Q2tnxPuaVC58PfmgdiVNf871IPK4pHBjrF6Yv/iy9rKgnfZAHQdwB6zHrmwiy8Ucszu/f95THZ1cfXC8v515L/21Jqm7S1VQKMBSLtZbfjmryQrps+kP8+N7wuOM+HYdz81I8wx1FCslZRe4CCib9v0P/aNIJaFFOBFoJGNxgpSWry40rGceEj/uAvKv5EKCudeMmxAjYlMFten0U8HG3x4zA9qrM9fM80mESEEr2YgVSRj84a757Z3GvzzfvkUgzv1v7ne9ayPsIVIY4r7ajr2lEbAT+h44OI2l8MP6IU01GLckWwLAOQMb/SV+OpopXGkEAlxtRALpu/UGjLiZ0WV/wITH3Zx/p1N7A2h5WBVPIj1CGx0NVFV8MnVMNCAA/vPmOwddF8YPg2OXH++x6oI+icGqevsBiXyWBaEo99vIdvQ/Gsw3+EHSdbVDcATuuSEt3KpJTufTLNoozYpBoDpv489Gu/bJ8I+HmhuItZFfaWc7hH2w3Es3aA0Fc/PC7Vrz8suxBz5ax/GqnJotJH/7B6f2A8=
