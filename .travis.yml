@@ -6,6 +6,7 @@ rust:
 
 deploy:
   provider: cargo
+  edge: true
   on:
     branch: master
   token:
