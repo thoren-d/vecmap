@@ -34,4 +34,30 @@ mod tests {
         assert_eq!(map.get(&3), Some(&2));
         assert_eq!(map.get(&5), Some(&1));
     }
+
+    #[test]
+    fn iterators() {
+        let mut map: VecMap<i32, i32> = VecMap::new();
+        map.insert(1, 11);
+        map.insert(0, 10);
+        map.insert(2, 20);
+
+        assert_eq!(
+            map.iter().copied().collect::<Vec<(i32, i32)>>(),
+            vec![(0, 10), (1, 11), (2, 20)]
+        );
+
+        for v in map.values_mut() {
+            *v += 1;
+        }
+        for (_k, v) in map.iter_mut() {
+            *v += 1;
+        }
+
+        assert_eq!(map.keys().copied().collect::<Vec<i32>>(), vec![0, 1, 2]);
+        assert_eq!(
+            map.values().copied().collect::<Vec<i32>>(),
+            vec![12, 13, 22]
+        );
+    }
 }

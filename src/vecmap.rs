@@ -68,6 +68,26 @@ impl<K: Ord, V> VecMap<K, V> {
             Err(_) => None,
         }
     }
+
+    pub fn iter(&self) -> impl Iterator<Item = &(K, V)> {
+        self.items.iter()
+    }
+
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = (&K, &mut V)> {
+        self.items.iter_mut().map(|kv| (&kv.0, &mut kv.1))
+    }
+
+    pub fn keys(&self) -> impl Iterator<Item = &K> {
+        self.items.iter().map(|kv| &kv.0)
+    }
+
+    pub fn values(&self) -> impl Iterator<Item = &V> {
+        self.items.iter().map(|kv| &kv.1)
+    }
+
+    pub fn values_mut(&mut self) -> impl Iterator<Item = &mut V> {
+        self.items.iter_mut().map(|kv| &mut kv.1)
+    }
 }
 
 impl<'a, K: Ord, V> Entry<'a, K, V> {
