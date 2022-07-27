@@ -336,7 +336,10 @@ impl<S: SearchStrategy, K, V> Map<S, K, V> {
     /// map.try_reserve(10).expect("why is the test harness OOMing on 10 bytes?");
     /// ```
     #[inline]
-    pub fn try_reserve(&mut self, additional: usize) -> Result<(), std::collections::TryReserveError> {
+    pub fn try_reserve(
+        &mut self,
+        additional: usize,
+    ) -> Result<(), std::collections::TryReserveError> {
         self.entries.try_reserve(additional)
     }
 
@@ -355,8 +358,10 @@ impl<S: SearchStrategy, K, V> Map<S, K, V> {
     /// ```
     #[inline]
     pub fn retain<F>(&mut self, mut f: F)
-        where F: FnMut(&K, &mut V) -> bool {
-        self.entries.retain_mut(|(k,v)| f(&*k, v))
+    where
+        F: FnMut(&K, &mut V) -> bool,
+    {
+        self.entries.retain_mut(|(k, v)| f(&*k, v))
     }
 
     /// Shrinks the capacity of the map with a lower limit. It will drop
@@ -555,7 +560,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.contains_key(&1), true);
     /// assert_eq!(map.contains_key(&2), false);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn contains_key<Q: ?Sized>(&self, key: &Q) -> bool
     where
         K: Borrow<Q>,
@@ -582,7 +587,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(letters[&'u'], 1);
     /// assert_eq!(letters.get(&'y'), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn entry(&mut self, key: K) -> Entry<LinearSearch, K, V> {
         match self
             .entries
@@ -612,7 +617,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.insert("hello".into(), 42), None);
     /// assert_eq!(map.get("hello"), Some(&42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get<Q>(&self, key: &Q) -> Option<&V>
     where
         K: Borrow<Q>,
@@ -634,7 +639,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.get_key_value(&1), Some((&1, &"a")));
     /// assert_eq!(map.get_key_value(&2), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get_key_value<Q>(&self, key: &Q) -> Option<(&K, &V)>
     where
         K: Borrow<Q>,
@@ -658,7 +663,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.insert("hello".into(), 42), None);
     /// assert_eq!(map.get_mut("hello"), Some(&mut 42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V>
     where
         K: Borrow<Q>,
@@ -687,7 +692,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.insert("hello", 42), None);
     /// assert_eq!(map.insert("hello", 69), Some(42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         match self.entries.iter_mut().find(|(k, _)| *k == key) {
             Some((_, v)) => Some(std::mem::replace(v, value)),
@@ -710,7 +715,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.remove(&1), Some("a"));
     /// assert_eq!(map.remove(&1), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn remove<Q>(&mut self, key: &Q) -> Option<V>
     where
         K: Borrow<Q>,
@@ -731,7 +736,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
     /// assert_eq!(map.remove_entry(&1), Some((1, "a")));
     /// assert_eq!(map.remove(&1), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn remove_entry<Q>(&mut self, key: &Q) -> Option<(K, V)>
     where
         K: Borrow<Q>,
@@ -750,7 +755,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
         }
     }
 
-    #[inline]
+    #[inline(always)]
     fn remove_at(&mut self, index: usize) -> (K, V) {
         self.entries.swap_remove(index)
     }
@@ -768,7 +773,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.contains_key(&1), true);
     /// assert_eq!(map.contains_key(&2), false);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn contains_key<Q: ?Sized>(&self, key: &Q) -> bool
     where
         K: Borrow<Q>,
@@ -795,7 +800,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(letters[&'u'], 1);
     /// assert_eq!(letters.get(&'y'), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn entry(&mut self, key: K) -> Entry<BinarySearch, K, V> {
         match self.entries.binary_search_by(|(k, _)| k.cmp(&key)) {
             Ok(index) => Entry::Occupied(OccupiedEntry {
@@ -820,7 +825,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.insert("hello".into(), 42), None);
     /// assert_eq!(map.get("hello"), Some(&42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get<Q>(&self, key: &Q) -> Option<&V>
     where
         K: Borrow<Q>,
@@ -843,7 +848,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.get_key_value(&1), Some((&1, &"a")));
     /// assert_eq!(map.get_key_value(&2), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get_key_value<Q>(&self, key: &Q) -> Option<(&K, &V)>
     where
         K: Borrow<Q>,
@@ -864,7 +869,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.insert("hello".into(), 42), None);
     /// assert_eq!(map.get_mut("hello"), Some(&mut 42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V>
     where
         K: Borrow<Q>,
@@ -885,7 +890,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.insert("hello", 42), None);
     /// assert_eq!(map.insert("hello", 69), Some(42));
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         match self.entries.binary_search_by(|(k, _)| k.cmp(&key)) {
             Ok(idx) => Some(std::mem::replace(&mut self.entries[idx].1, value)),
@@ -908,7 +913,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.remove(&1), Some("a"));
     /// assert_eq!(map.remove(&1), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn remove<Q>(&mut self, key: &Q) -> Option<V>
     where
         K: Borrow<Q>,
@@ -929,7 +934,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
     /// assert_eq!(map.remove_entry(&1), Some((1, "a")));
     /// assert_eq!(map.remove(&1), None);
     /// ```
-    #[inline]
+    #[inline(always)]
     pub fn remove_entry<Q>(&mut self, key: &Q) -> Option<(K, V)>
     where
         K: Borrow<Q>,
@@ -942,7 +947,7 @@ impl<K: Ord + Eq, V> Map<BinarySearch, K, V> {
         }
     }
 
-    #[inline]
+    #[inline(always)]
     fn remove_at(&mut self, index: usize) -> (K, V) {
         self.entries.remove(index)
     }
@@ -1024,7 +1029,7 @@ where
     /// let map = LinearMap::from([("a", 1), ("b", 2)]);
     /// assert_eq!(map["b"], 2);
     /// ```
-    #[inline]
+    #[inline(always)]
     fn index(&self, index: &Q) -> &Self::Output {
         self.get(index).expect("key not found")
     }
@@ -1049,7 +1054,7 @@ where
     /// let map = BinaryMap::from([("a", 1), ("b", 2)]);
     /// assert_eq!(map["b"], 2);
     /// ```
-    #[inline]
+    #[inline(always)]
     fn index(&self, index: &Q) -> &Self::Output {
         self.get(index).expect("key not found")
     }

@@ -8,7 +8,10 @@ fn count_words_linear_map(words: &[&str]) {
     for word in words {
         *map.entry(*word).or_default() += 1;
     }
-    let (word, count) = map.iter().max_by_key(|(_k,v)| **v).expect("should've been a word in here");
+    let (word, count) = map
+        .iter()
+        .max_by_key(|(_k, v)| **v)
+        .expect("should've been a word in here");
 
     let elapsed = before.elapsed().as_secs_f64();
     println!("***LinearMap***");
@@ -26,7 +29,10 @@ fn count_words_binary_map(words: &[&str]) {
     for word in words {
         *map.entry(*word).or_default() += 1;
     }
-    let (word, count) = map.iter().max_by_key(|(_k,v)| **v).expect("should've been a word in here");
+    let (word, count) = map
+        .iter()
+        .max_by_key(|(_k, v)| **v)
+        .expect("should've been a word in here");
 
     let elapsed = before.elapsed().as_secs_f64();
     println!("***BinaryMap***");
@@ -44,7 +50,10 @@ fn count_words_hash_map(words: &[&str]) {
     for word in words {
         *map.entry(*word).or_default() += 1;
     }
-    let (word, count) = map.iter().max_by_key(|(_k,v)| **v).expect("should've been a word in here");
+    let (word, count) = map
+        .iter()
+        .max_by_key(|(_k, v)| **v)
+        .expect("should've been a word in here");
 
     let elapsed = before.elapsed().as_secs_f64();
     println!("***HashMap***");
@@ -56,7 +65,9 @@ fn count_words_hash_map(words: &[&str]) {
 }
 
 fn main() {
-    let file = std::env::args().nth(1).expect("expected usage: wordcount <text file>");
+    let file = std::env::args()
+        .nth(1)
+        .expect("expected usage: wordcount <text file>");
     let file = std::fs::read(file).expect("failed to read file");
     let file = String::from_utf8(file).expect("file contained invalid utf-8");
     let words: Vec<&str> = file.split_whitespace().collect();

@@ -20,7 +20,6 @@ impl Key for u32 {
     }
 }
 
-
 fn random_string() -> String {
     use rand::distributions::{Alphanumeric, DistString};
     let len = rand::distributions::Uniform::new(4, 20).sample(&mut thread_rng());
@@ -108,11 +107,27 @@ fn bench_fill(c: &mut Criterion) {
     let mut group = c.benchmark_group("fill");
     for size in SIZES {
         group.throughput(Throughput::Elements(*size as u64));
-        group.bench_with_input(BenchmarkId::new("linear/u32", size), size, fill_linear_map_u32);
-        group.bench_with_input(BenchmarkId::new("binary/u32", size), size, fill_binary_map_u32);
+        group.bench_with_input(
+            BenchmarkId::new("linear/u32", size),
+            size,
+            fill_linear_map_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/u32", size),
+            size,
+            fill_binary_map_u32,
+        );
         group.bench_with_input(BenchmarkId::new("hash/u32", size), size, fill_hash_map_u32);
-        group.bench_with_input(BenchmarkId::new("linear/str", size), size, fill_linear_map_str);
-        group.bench_with_input(BenchmarkId::new("binary/str", size), size, fill_binary_map_str);
+        group.bench_with_input(
+            BenchmarkId::new("linear/str", size),
+            size,
+            fill_linear_map_str,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/str", size),
+            size,
+            fill_binary_map_str,
+        );
         group.bench_with_input(BenchmarkId::new("hash/str", size), size, fill_hash_map_str);
     }
     group.finish()
@@ -122,12 +137,36 @@ fn bench_from_iter(c: &mut Criterion) {
     let mut group = c.benchmark_group("from_iter");
     for size in SIZES {
         group.throughput(Throughput::Elements(*size as u64));
-        group.bench_with_input(BenchmarkId::new("linear/u32", size), size, linear_map_from_iter_u32);
-        group.bench_with_input(BenchmarkId::new("binary/u32", size), size, binary_map_from_iter_u32);
-        group.bench_with_input(BenchmarkId::new("hash/u32", size), size, hash_map_from_iter_u32);
-        group.bench_with_input(BenchmarkId::new("linear/str", size), size, linear_map_from_iter_str);
-        group.bench_with_input(BenchmarkId::new("binary/str", size), size, binary_map_from_iter_str);
-        group.bench_with_input(BenchmarkId::new("hash/str", size), size, hash_map_from_iter_str);
+        group.bench_with_input(
+            BenchmarkId::new("linear/u32", size),
+            size,
+            linear_map_from_iter_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/u32", size),
+            size,
+            binary_map_from_iter_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("hash/u32", size),
+            size,
+            hash_map_from_iter_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("linear/str", size),
+            size,
+            linear_map_from_iter_str,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/str", size),
+            size,
+            binary_map_from_iter_str,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("hash/str", size),
+            size,
+            hash_map_from_iter_str,
+        );
     }
     group.finish()
 }
@@ -136,12 +175,36 @@ fn bench_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("lookup");
     for size in SIZES {
         group.throughput(Throughput::Elements(1));
-        group.bench_with_input(BenchmarkId::new("linear/u32", size), size, lookup_linear_map_u32);
-        group.bench_with_input(BenchmarkId::new("binary/u32", size), size, lookup_binary_map_u32);
-        group.bench_with_input(BenchmarkId::new("hash/u32", size), size, lookup_hash_map_u32);
-        group.bench_with_input(BenchmarkId::new("linear/str", size), size, lookup_linear_map_str);
-        group.bench_with_input(BenchmarkId::new("binary/str", size), size, lookup_binary_map_str);
-        group.bench_with_input(BenchmarkId::new("hash/str", size), size, lookup_hash_map_str);
+        group.bench_with_input(
+            BenchmarkId::new("linear/u32", size),
+            size,
+            lookup_linear_map_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/u32", size),
+            size,
+            lookup_binary_map_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("hash/u32", size),
+            size,
+            lookup_hash_map_u32,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("linear/str", size),
+            size,
+            lookup_linear_map_str,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("binary/str", size),
+            size,
+            lookup_binary_map_str,
+        );
+        group.bench_with_input(
+            BenchmarkId::new("hash/str", size),
+            size,
+            lookup_hash_map_str,
+        );
     }
 }
 
