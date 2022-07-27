@@ -749,10 +749,7 @@ impl<K: Eq, V> Map<LinearSearch, K, V> {
                 None
             }
         });
-        match idx {
-            Some(idx) => Some(self.remove_at(idx)),
-            None => None,
-        }
+        idx.map(|idx| self.remove_at(idx))
     }
 
     #[inline(always)]
